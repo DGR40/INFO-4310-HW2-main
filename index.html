@@ -345,41 +345,29 @@
 
         // try and figure out the lines in Danny's way ??
         regionDisasterCounts.forEach((regionObj, i) => {
-          total = regionObj["Total"];
-          region = regionObj["Region"]
-          region.replace(" ", "");
           let nextFloor = 0;
           for (let c in regionObj) {
-            wanted_bars = ['Earthquake', 'Epidemic', 'Flood', 'Landslide', 'Storm'];
-            if ( wanted_bars.includes(c) ) {
-              percent = regionObj[c] / total;
-                barGraph.append("rect")
-                  .attr("x", regionScale(region) + barGraphMargin.left)
-                  .attr("y", nextFloor + barGraphMargin.top)
-                  .attr("originalPosition", nextFloor + barGraphMargin.top)
-                  .attr("width", rectWidth)
-                  .attr("height", percentScale(regionObj[c] / total))
-                  .style("fill", scaleOrdinal(c))
-                  .attr("originalFill", scaleOrdinal(c))
-                  .attr("class", `bar ${c} ${region}`);
-                nextFloor += percentScale(regionObj[c] / total);
+            console.log(c);
+            not_wanted_bars = ['Earthquake', 'Epidemic', 'Flood', 'Landslide', 'Storm', 'Region', 'Total'];
+            if ( !not_wanted_bars.includes(c) ) {
+              console.log('test')
+              var lineGen = d3.line()
+                        .x( dateScale(lineGraphTimeParser(c)))
+                        .y( countScale(regionObj[c]) )
+                        .curve(d3.curveMonotoneX); 
+
+              lineGraphArea.append("path")
+                    .datum(regionObj)
+                    .attr("class", "line")
+                    .attr("fill", "none")  
+                    .attr("stroke", "steelblue")
+                    .attr("stroke-width", 3)
+                    .attr("d", lineGen);
             }
           }
         })
 
-        // var lineGen = d3.line()
-        //                 .x( d => dateScale(lineGraphTimeParser(d['year']) ))
-        //                 .y( d => countExtent(d['Carbon Dioxide (ppm)']) )
-        //                 .curve(d3.curveMonotoneX); 
-
-        // lineGraphArea.append("path")
-        //             .datum(regionDisasterCounts)
-        //             .attr("class", "line")
-        //             .attr("fill", "none")  
-        //             .attr("stroke", "steelblue")
-        //             .attr("stroke-width", 3)
-        //             .attr("d", lineGen);
-
+      
       }
 
       requestData();
