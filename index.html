@@ -32,7 +32,11 @@
       text-align:start;
       margin-right:20px;
       margin-top:10px;
-      background-color:rgb(225, 225, 225);
+      background-color:rgb(225, 225, 225, 0.4);
+    }
+
+    #legend {
+       background-color:rgb(225, 225, 225, 0.4);
     }
 
     .panel label {
@@ -67,7 +71,7 @@
     <h3> 1900 - 2021</h3>
     <div class="flex">
       <div class="column1"> 
-        <svg id="barGraph" height=600 width=1000></svg>
+        <svg id="barGraph" height=600 width=1000 style="margin-top:20px;"></svg>
       </div>
        <div id="regionControls">
         <div>
@@ -388,8 +392,8 @@
           let text = fixedLegend.append("text")
             .style("position", "absolute")
             .text(disasterList[i])
-            .style("right", 200)
-            .style("top", 190 + i * 34)
+            .style("left", 230 + i * 140 )
+            .style("top", 73)
             .style("height", 50)
             .style("padding-top", "16px")
             .style("text-align", "right")
@@ -397,15 +401,15 @@
           let box = fixedLegend.append("rect")
             .style("background", scaleOrdinal(disasterList[i]))
             .style("position", "absolute")
-            .style("right", 40)
-            .style("top", 200 + i * 34)
+            .style("left", 200 + i * 140)
+            .style("top", 86)
             .style("width", 20)
             .style("height", 20)
           let container = fixedLegend.append("rect")
             .style("position", "absolute")
             .style("opacity", 0)
-            .style("right", 40)
-            .style("top", 200 + i * 34)
+            .style("left", 200 + i * 140 )
+            .style("top", 86)
             .style("width", 140)
             .style("height", 50)
           container.on("mouseover", function () {
