@@ -28,9 +28,33 @@
       stroke: none;
     }
     .panel {
-      width:200px;
-      text-align:start
+      width:220px;
+      text-align:start;
+      margin-right:20px;
+      border-radius:4px;
+      border: 1px solid grey;
     }
+    #regionControls {
+      display:flex;
+      flex-direction: row;
+      width:10000;
+    }
+    .allRegionButton {
+      width:100%;
+      text-align:center;
+      font-size: 16px;
+      background-color: white;
+      border-radius:4px;
+      height:30px;
+    }
+    .allRegionButton:hover {
+      background-color: #666666;
+      color:white
+    }
+    .panel > input {
+      margin-bottom: 5px;
+    }
+
   </style>
 
 <body style="font-family: 'Quicksand', sans-serif;">
@@ -38,10 +62,15 @@
     <h3> 1900 - 2021</h3>
     <div class="flex">
       <div class="column1"> 
-        <svg id="barGraph" height=600 width=850></svg>
-      <div id="regionControls" width=600 style="display:flex;flex-direction:row;">
-        <div id="asiaPanel" class="panel">
-          <h3>Asia</h3>
+        <svg id="barGraph" height=600 width=1000></svg>
+      <div id="regionControls">
+        <div>
+          <input type="button" checked onclick="selectAll(true)" value="All"> 
+          <input type="button" checked onclick="selectAll(false)" value="Clear"> 
+        </div>
+        
+        <div class="panel">
+          <input type="button" class="allRegionButton" value="All of Asia">
         <div><input type="checkbox" name="SouthernAsia" onclick="highlightBars()">
           <label>Southern Asia</label>
         </div>
@@ -63,48 +92,87 @@
         </div>
         </div>
 
-        <div id="africaPanel" class="panel">
-          <h3>Africa</h3>
-          <div>
-            <input type="checkbox" name="EasternAfrica" checked onclick="highlightBars()">
+         <div class="panel">
+          <input type="button" class="allRegionButton" value="All of Africa">
+        <div>
+          <input type="checkbox" name="EasternAfrica" checked onclick="highlightBars()">
             <label>Eastern Africa</label>
+        </div>
+        <div>
+          <input type="checkbox" name="WesternAfrica" checked onclick="highlightBars()">
+          <label>Western Africa</label>
+        </div>
+        <div>
+          <input type="checkbox" name="MiddleAfrica" checked onclick="highlightBars()">
+          <label>Middle Africa</label>
+        </div>
+        <div>
+          <input type="checkbox" name="NorthernAfrica" checked onclick="highlightBars()">
+          <label>Northern Africa</label>
+        </div>
+        <div>
+           <input type="checkbox" name="SouthernAfrica" checked onclick="highlightBars()">
+           <label>Southern Africa</label>  
+        </div>
+        </div>
+        
+        <div class="panel">
+          <input type="button" class="allRegionButton" value="All of Americas">
+          <div>
+           <input type="checkbox" name="NorthernAmerica" checked onclick="highlightBars()">
+            <label>Northern America</label>
           </div>
-          
+          <div>
+            <input type="checkbox" name="SouthAmerica" checked onclick="highlightBars()">
+            <label>South America</label>
+          </div>
+
+          <div>
+            <input type="checkbox" name="CentralAmerica" checked onclick="highlightBars()">
+            <label>Central America</label>
+          </div>
         </div>
 
-    <input type="checkbox" name="SouthAmerica" checked onclick="highlightBars()">
-          <label>South America</label>
-  <input type="checkbox" name="NorthernAmerica" checked onclick="highlightBars()">
-  <label>Northern America</label>
-  
-  <input type="checkbox" name="CentralAmerica" checked onclick="highlightBars()">
-  <label>Central America</label>
-  <input type="checkbox" name="WesternAfrica" checked onclick="highlightBars()">
-  <label>Western Africa</label>
-  <input type="checkbox" name="SouthernEurope" checked onclick="highlightBars()">
-  <label>Southern Europe</label>
-  <input type="checkbox" name="Caribbean" checked onclick="highlightBars()">
-  <label>Caribbean</label>
-  
-  <input type="checkbox" name="EasternEurope" checked onclick="highlightBars()">
-  <label>Eastern Europe</label>
-  <input type="checkbox" name="WesternEurope" checked onclick="highlightBars()">
-  <label>Western Europe</label>
-  <input type="checkbox" name="MiddleAfrica" checked onclick="highlightBars()">
-  <label>Middle Africa</label>
-  <input type="checkbox" name="OceaniaIslands" checked onclick="highlightBars()">
-  <label>Oceania Islands</label>
-  <input type="checkbox" name="NorthernAfrica" checked onclick="highlightBars()">
-  <label>Northern Africa</label>
-  <input type="checkbox" name="Australiaand" checked onclick="highlightBars()">
-  <label>Australia and New Zealand</label>
-  <input type="checkbox" name="NorthernEurope" checked onclick="highlightBars()">
-  <label>Northern Europe</label>
-  <input type="checkbox" name="SouthernAfrica" checked onclick="highlightBars()">
-  <label>Southern Africa</label>
+        <div class="panel">
+          <input type="button" class="allRegionButton" value="All of Europe">
+          <div>
+           <input type="checkbox" name="NorthernEurope" checked onclick="highlightBars()">
+            <label>Northern Europe</label>
+          </div>
+          <div>
+            <input type="checkbox" name="EasternEurope" checked onclick="highlightBars()">
+            <label>Eastern Europe</label>
+          </div>
+
+          <div>
+            <input type="checkbox" name="WesternEurope" checked onclick="highlightBars()">
+            <label>Western Europe</label>
+          </div>
+
+          <div>
+            <input type="checkbox" name="SouthernEurope" checked onclick="highlightBars()">
+            <label>Southern Europe</label>
+          </div>
+        </div>
+
+        <div class="panel">
+          <input type="button" class="allRegionButton" value="All of the Rest">
+          <div>
+           <input type="checkbox" name="Caribbean" checked onclick="highlightBars()">
+            <label>Caribbean</label>
+          </div>
+          <div>
+            <input type="checkbox" name="Australiaand" checked onclick="highlightBars()">
+            <label>Australia and New Zealand</label>
+          </div>
+
+          <div>
+            <input type="checkbox" name="OceaniaIslands" checked onclick="highlightBars()">
+            <label>Oceania Islands</label>
+          </div>
+        </div>
  
-  <input type="button" checked onclick="selectAll(true)" value="All"> 
-  <input type="button" checked onclick="selectAll(false)" value="Clear"> 
+  
   </div>
   </div>
   </div>
@@ -296,6 +364,7 @@
                   .style("fill", scaleOrdinal(c))
                   .attr("originalFill", scaleOrdinal(c))
                   .attr("class", `bar ${c} ${regionNoSpaces}`)
+
                 nextFloor += percentScale(regionObj[c] / total);
             }
           }
@@ -307,7 +376,7 @@
           let text = fixedLegend.append("text")
             .style("position", "absolute")
             .text(disasterList[i])
-            .style("right", 80)
+            .style("right", 200)
             .style("top", 190 + i * 34)
             .style("height", 50)
             .style("padding-top", "16px")
