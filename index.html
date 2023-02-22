@@ -166,7 +166,6 @@
           for (let c in regionObj) {
             if (c != "Total" && c != "Region") {
               percent = regionObj[c] / total;
-              if (percent >= 0.01) {
                 barGraph.append("rect")
                   .attr("x", regionScale(region) + barGraphMargin.left)
                   .attr("y", nextFloor + barGraphMargin.top)
@@ -177,7 +176,6 @@
                   .attr("originalFill", scaleOrdinal(c))
                   .attr("class", `bar ${c} ${region}`);
                 nextFloor += percentScale(regionObj[c] / total);
-              }
             }
           }
         })
