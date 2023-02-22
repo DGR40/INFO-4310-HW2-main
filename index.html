@@ -53,6 +53,9 @@
     .panel > input {
       margin-bottom: 5px;
     }
+    .allOrNone {
+      width:105px;
+    }
 
   </style>
 
@@ -65,8 +68,8 @@
       </div>
        <div id="regionControls">
         <div>
-          <input type="button" checked onclick="selectAll(true)" value="All"> 
-          <input type="button" checked onclick="selectAll(false)" value="Clear"> 
+          <input class="allOrNone" type="button" checked onclick="selectAll(true)" value="All"> 
+          <input class="allOrNone" type="button" checked onclick="selectAll(false)" value="Clear"> 
         </div>
         
         <div class="panel" id="asia">
@@ -641,7 +644,7 @@
             //console.log("bar", bar)
             bar.forEach((r, i) => {
               d3.select(r).transition().duration(200)
-                .attr("opacity", 0.15);
+                .attr("opacity", 0.2);
             })
           })
 
