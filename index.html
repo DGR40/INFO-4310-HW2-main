@@ -69,105 +69,113 @@
           <input type="button" checked onclick="selectAll(false)" value="Clear"> 
         </div>
         
-        <div class="panel">
-          <input type="button" class="allRegionButton" value="All of Asia">
-        <div><input type="checkbox" name="SouthernAsia" onclick="highlightBars()">
-          <label>Southern Asia</label>
+        <div class="panel" id="asia">
+          <label>All of Asia</label>
+          <input type="checkbox" class="allRegionButton" onclick="selectGreaterRegion(this)">
+          
+          <div>
+            <input type="checkbox" class="regionSelector" name="SouthernAsia" onclick="highlightBars()">
+            <label>Southern Asia</label>
         </div>
         <div>
-          <input type="checkbox" name="South-EasternAsia" checked onclick="highlightBars()">
+          <input type="checkbox" name="South-EasternAsia" class="regionSelector" checked onclick="highlightBars()">
            <label>South-Eastern Asia</label>
         </div>
         <div>
-          <input type="checkbox" name="EasternAsia" checked onclick="highlightBars()">
+          <input type="checkbox" name="EasternAsia" class="regionSelector" checked onclick="highlightBars()">
           <label>Eastern Asia</label>
         </div>
         <div>
-          <input type="checkbox" name="WesternAsia" checked onclick="highlightBars()">
+          <input type="checkbox" name="WesternAsia" class="regionSelector" checked onclick="highlightBars()">
           <label>Western Asia</label>
         </div>
         <div>
-           <input type="checkbox" name="CentralAsia" checked onclick="highlightBars()">
+           <input type="checkbox" name="CentralAsia" class="regionSelector" checked onclick="highlightBars()">
           <label>Central Asia</label>
         </div>
         </div>
 
          <div class="panel">
-          <input type="button" class="allRegionButton" value="All of Africa">
+          <label>All of Africa</label>
+          <input type="checkbox" class="allRegionButton" onclick="selectGreaterRegion(this)">
         <div>
-          <input type="checkbox" name="EasternAfrica" checked onclick="highlightBars()">
+          <input type="checkbox" name="EasternAfrica"  class="regionSelector" checked onclick="highlightBars()">
             <label>Eastern Africa</label>
         </div>
         <div>
-          <input type="checkbox" name="WesternAfrica" checked onclick="highlightBars()">
+          <input type="checkbox" name="WesternAfrica"  class="regionSelector" checked onclick="highlightBars()">
           <label>Western Africa</label>
         </div>
         <div>
-          <input type="checkbox" name="MiddleAfrica" checked onclick="highlightBars()">
+          <input type="checkbox" name="MiddleAfrica"  class="regionSelector" checked onclick="highlightBars()">
           <label>Middle Africa</label>
         </div>
         <div>
-          <input type="checkbox" name="NorthernAfrica" checked onclick="highlightBars()">
+          <input type="checkbox" name="NorthernAfrica"  class="regionSelector" checked onclick="highlightBars()">
           <label>Northern Africa</label>
         </div>
         <div>
-           <input type="checkbox" name="SouthernAfrica" checked onclick="highlightBars()">
+           <input type="checkbox" name="SouthernAfrica"  class="regionSelector" checked onclick="highlightBars()">
            <label>Southern Africa</label>  
         </div>
         </div>
         
         <div class="panel">
-          <input type="button" class="allRegionButton" value="All of Americas">
+          <label>All of the Americas</label>
+          <input type="checkbox" class="allRegionButton" onclick="selectGreaterRegion(this)">
           <div>
-           <input type="checkbox" name="NorthernAmerica" checked onclick="highlightBars()">
+           <input type="checkbox" name="NorthernAmerica"  class="regionSelector" checked onclick="highlightBars()">
             <label>Northern America</label>
           </div>
           <div>
-            <input type="checkbox" name="SouthAmerica" checked onclick="highlightBars()">
+            <input type="checkbox" name="SouthAmerica"  class="regionSelector" checked onclick="highlightBars()">
             <label>South America</label>
           </div>
 
           <div>
-            <input type="checkbox" name="CentralAmerica" checked onclick="highlightBars()">
+            <input type="checkbox" name="CentralAmerica"  class="regionSelector" checked onclick="highlightBars()">
             <label>Central America</label>
           </div>
         </div>
 
         <div class="panel">
-          <input type="button" class="allRegionButton" value="All of Europe">
+
+           <label>All of Europe</label>
+          <input type="checkbox" class="allRegionButton" onclick="selectGreaterRegion(this)">
           <div>
-           <input type="checkbox" name="NorthernEurope" checked onclick="highlightBars()">
+           <input type="checkbox" name="NorthernEurope"  class="regionSelector" checked onclick="highlightBars()">
             <label>Northern Europe</label>
           </div>
           <div>
-            <input type="checkbox" name="EasternEurope" checked onclick="highlightBars()">
+            <input type="checkbox" name="EasternEurope"  class="regionSelector" checked onclick="highlightBars()">
             <label>Eastern Europe</label>
           </div>
 
           <div>
-            <input type="checkbox" name="WesternEurope" checked onclick="highlightBars()">
+            <input type="checkbox" name="WesternEurope"  class="regionSelector" checked onclick="highlightBars()">
             <label>Western Europe</label>
           </div>
 
           <div>
-            <input type="checkbox" name="SouthernEurope" checked onclick="highlightBars()">
+            <input type="checkbox" name="SouthernEurope"  class="regionSelector" checked onclick="highlightBars()">
             <label>Southern Europe</label>
           </div>
         </div>
 
         <div class="panel">
-          <input type="button" class="allRegionButton" value="All of the Rest">
+           <label>All of the Rest</label>
+          <input type="checkbox" class="allRegionButton" onclick="selectGreaterRegion(this)">
           <div>
-           <input type="checkbox" name="Caribbean" checked onclick="highlightBars()">
+           <input type="checkbox" name="Caribbean"  class="regionSelector" checked onclick="highlightBars()">
             <label>Caribbean</label>
           </div>
           <div>
-            <input type="checkbox" name="Australiaand" checked onclick="highlightBars()">
+            <input type="checkbox" name="Australiaand"  class="regionSelector" checked onclick="highlightBars()">
             <label>Australia and New Zealand</label>
           </div>
 
           <div>
-            <input type="checkbox" name="OceaniaIslands" checked onclick="highlightBars()">
+            <input type="checkbox" name="OceaniaIslands"  class="regionSelector" checked onclick="highlightBars()">
             <label>Oceania Islands</label>
           </div>
         </div>
@@ -440,10 +448,6 @@
           })
         }
 
-        
-
-        highlightBars();
-
         // Returns graph to original position
         function reappearAll() {
           let goodRegions = getGoodRegions()
@@ -585,6 +589,7 @@
                                 .attr("cy", d => countScale(d['count']))
                                 .attr("r", 4)
                                 .attr("fill", d => colorScale(d['region']));
+          selectAll(true);
 
       }
 
@@ -604,7 +609,7 @@
       }
 
       // function for highlighting bars
-      function highlightBars(allOrNone = "") {
+      function highlightBars(allOrNone = "", barList = []) {
 
           let goodRegions = getGoodRegions()
 
@@ -667,13 +672,32 @@
           highlightBars()
         }
 
-        function highlightListOfBars() 
+        function selectGreaterRegion(greaterRegionCheckbox) {
+          let checked = greaterRegionCheckbox.checked;
+          let greaterRegionPanel = greaterRegionCheckbox.parentNode;
+          console.log("greater region: ", greaterRegionPanel)
 
-
-
-
-
-
+          let boxes = greaterRegionPanel.querySelectorAll('.regionSelector');
+          console.log(boxes)
+          
+            // uncheck all 
+            if (!checked) {
+              console.log("checked!")
+              boxes.forEach(box => {
+              box.checked = false
+            })
+            highlightBars()
+            } else {
+              console.log("not checked")
+              boxes.forEach(box => {
+              box.checked = true
+            })
+            highlightBars()
+            
+            
+          }
+        }
+      
     </script>
 </body>
 </html>
