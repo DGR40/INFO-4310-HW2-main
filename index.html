@@ -31,20 +31,25 @@
       width:220px;
       text-align:start;
       margin-right:20px;
-      border-radius:4px;
-      border: 1px solid grey;
+      margin-top:10px;
+      background-color:rgb(225, 225, 225);
+    }
+
+    .panel label {
+      text-align:center
     }
     #regionControls {
       display:flex;
-      flex-direction: row;
+      flex-direction: column;
       width:10000;
+      position: fixed;
+      left:60%;
+      margin-left:10px;
     }
     .allRegionButton {
       width:100%;
       text-align:center;
       font-size: 16px;
-      background-color: white;
-      border-radius:4px;
       height:30px;
     }
     .allRegionButton:hover {
@@ -63,7 +68,8 @@
     <div class="flex">
       <div class="column1"> 
         <svg id="barGraph" height=600 width=1000></svg>
-      <div id="regionControls">
+      </div>
+       <div id="regionControls">
         <div>
           <input type="button" checked onclick="selectAll(true)" value="All"> 
           <input type="button" checked onclick="selectAll(false)" value="Clear"> 
@@ -179,15 +185,13 @@
             <label>Oceania Islands</label>
           </div>
         </div>
- 
-  
   </div>
   </div>
   </div>
 </div>
 <div id="legend"></div>
         </div>
-        <svg id="lineGraph" height="600" width="900" style="background-color: black; color: white;"> </svg>
+        <svg id="lineGraph" height="600" width="1000" style="background-color: white; color: black;"> </svg>
       </div>
      
     </div>
@@ -549,8 +553,8 @@
         lineGraphAnnotations.append("text")
           .attr("class", "x label")
           .attr("text-anchor", "middle")
-          .attr("stroke", "white")
-          .attr("fill", "white")
+          .attr("stroke", "black")
+          .attr("fill", "black")
           .attr("x", (lineGraphWidth / 2) + lineGraphMargin.left)
           .attr("y", lineGraphHeight + lineGraphMargin.top + lineGraphMargin.bottom)
           .text("Decade");
@@ -558,8 +562,7 @@
         lineGraphAnnotations.append("text")
           .attr("class", "y label")
           .attr("text-anchor", "middle")
-          .attr("stroke", "white")
-          .attr("fill", "white")
+          .attr("fill", "black")
           .attr("y", 5)
           .attr("x", -lineGraphHeight / 2 + lineGraphMargin.top)
           .attr("dy", ".6em")
