@@ -50,16 +50,6 @@
       left:60%;
       margin-left:10px;
     }
-    .allRegionButton {
-      width:100%;
-      text-align:center;
-      font-size: 16px;
-      height:30px;
-    }
-    .allRegionButton:hover {
-      background-color: #666666;
-      color:white
-    }
     .panel > input {
       margin-bottom: 5px;
     }
@@ -80,8 +70,9 @@
         </div>
         
         <div class="panel" id="asia">
-          <label>All of Asia</label>
-          <input type="checkbox" class="allRegionButton" onclick="selectGreaterRegion(this)">
+          
+          <input type="checkbox" onclick="selectGreaterRegion(this)">
+          <label class="allRegion">All of Asia</label>
           
           <div>
             <input type="checkbox" class="regionSelector" name="SouthernAsia" onclick="highlightBars()">
@@ -106,8 +97,8 @@
         </div>
 
          <div class="panel">
-          <label>All of Africa</label>
-          <input type="checkbox" class="allRegionButton" onclick="selectGreaterRegion(this)">
+          
+          <input type="checkbox" class="allRegionButton" onclick="selectGreaterRegion(this)"><label>All of Africa</label>
         <div>
           <input type="checkbox" name="EasternAfrica"  class="regionSelector" checked onclick="highlightBars()">
             <label>Eastern Africa</label>
@@ -131,8 +122,9 @@
         </div>
         
         <div class="panel">
-          <label>All of the Americas</label>
+          
           <input type="checkbox" class="allRegionButton" onclick="selectGreaterRegion(this)">
+          <label>All of the Americas</label>
           <div>
            <input type="checkbox" name="NorthernAmerica"  class="regionSelector" checked onclick="highlightBars()">
             <label>Northern America</label>
@@ -150,8 +142,8 @@
 
         <div class="panel">
 
-           <label>All of Europe</label>
-          <input type="checkbox" class="allRegionButton" onclick="selectGreaterRegion(this)">
+          
+          <input type="checkbox" class="allRegionButton" onclick="selectGreaterRegion(this)"> <label>All of Europe</label>
           <div>
            <input type="checkbox" name="NorthernEurope"  class="regionSelector" checked onclick="highlightBars()">
             <label>Northern Europe</label>
@@ -173,8 +165,8 @@
         </div>
 
         <div class="panel">
-           <label>All of the Rest</label>
-          <input type="checkbox" class="allRegionButton" onclick="selectGreaterRegion(this)">
+          
+          <input type="checkbox" class="allRegionButton" onclick="selectGreaterRegion(this)"> <label>All of the Rest</label>
           <div>
            <input type="checkbox" name="Caribbean"  class="regionSelector" checked onclick="highlightBars()">
             <label>Caribbean</label>
@@ -195,7 +187,7 @@
 </div>
 <div id="legend"></div>
         </div>
-        <svg id="lineGraph" height="600" width="1000" style="background-color: white; color: black;"> </svg>
+        <svg id="lineGraph" height="600" width="1000" style="background-color: white; color: black; margin-bottom: 50px"> </svg>
       </div>
      
     </div>
@@ -360,7 +352,7 @@
 
         // Create bars (only if disaster has at least 1% in a region)
 
-        let rectWidth = barGraphWidth / 20;
+        let rectWidth = (barGraphWidth / 20) - 1
 
         regionDisasterCounts.forEach((regionObj, i) => {
           total = regionObj["Total"];
@@ -389,37 +381,50 @@
         // LEGEND FUNCTIONS //
         let fixedLegend = d3.select("#legend")
         for (let i = 0; i < disasterList.length; i++) {
-          let text = fixedLegend.append("text")
+          let legendDiv = fixedLegend.append("div").style("fontWeight", 100).style("opacity", 1)
+          let text = legendDiv.append("text")
             .style("position", "absolute")
             .text(disasterList[i])
-            .style("left", 230 + i * 140 )
+            .style("left", 210 + i * 140 )
             .style("top", 73)
             .style("height", 50)
             .style("padding-top", "16px")
             .style("text-align", "right")
             .style("color", scaleOrdinal(disasterList[i]));
-          let box = fixedLegend.append("rect")
-            .style("background", scaleOrdinal(disasterList[i]))
+          // let box = fixedLegend.append("rect")
+          //   .style("background", scaleOrdinal(disasterList[i]))
+          //   .style("position", "absolute")
+          //   .style("left", 200 + i * 140)
+          //   .style("top", 86)
+          //   .style("width", 20)
+          //   .style("height", 20)
+          let container = legendDiv.append("rect")
             .style("position", "absolute")
-            .style("left", 200 + i * 140)
-            .style("top", 86)
-            .style("width", 20)
-            .style("height", 20)
-          let container = fixedLegend.append("rect")
-            .style("position", "absolute")
-            .style("opacity", 0)
-            .style("left", 200 + i * 140 )
+            .style("left", 170 + i * 145 )
             .style("top", 86)
             .style("width", 140)
-            .style("height", 50)
-          container.on("mouseover", function () {
+            .style("height", 20)
+            .style("padding-bottom", 10)
+          legendDiv.on("mouseover", function () {
+            this.style.backgroundColor = 'red'
             disappear(disasterList[i])
-            console.log(regionList[i])
-            //disappearRegion("SouthernAsia")
+            highlightLegendBox(this, disasterList[i])
           }).on("mouseout", function () {
             reappearAll()
+            unhighlightLegendBox(this, disasterList[i])
           });
         }
+
+        function highlightLegendBox(box, disaster) {          
+          box.style.backgroundColor = scaleOrdinal(disaster)
+          box.style.fontWeight = 900
+        }
+
+        function unhighlightLegendBox(box, disaster) {
+          box.style.backgroundColor = ""
+          box.style.fontWeight = 100;
+        }
+
         // Graph manipulation functions
 
         // Hides all bars except selected disaster type
