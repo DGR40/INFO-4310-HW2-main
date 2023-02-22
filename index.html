@@ -1,0 +1,306 @@
+</html>
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>INFO 4310 HW 2</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    
+  </style>
+
+<body>
+    <h1>Natural Disasters Across the World</h1>
+    <br /><br /><br />
+    <div id="graph" style="position: relative; overflow: visible; font-family: 'Quicksand', sans-serif;">
+      <svg id="barGraph" height=450 width=800></svg>
+      <div id="legend" style="position: fixed; top: -50; left: 820;">
+    </div>
+    </div>
+    <script>
+    
+      /* ==============================------------------------------==============================
+       *                                       Bar Chart
+       * ==============================------------------------------==============================
+       */
+
+      let barGraph = d3.select('svg#barGraph');
+      const barTotalWidth = barGraph.attr("width");
+      const barTotalHeight = barGraph.attr("height");
+      const barGraphMargin = {
+        top: 10,
+        right: 160,
+        bottom: 50,
+        left: 70
+      };
+      const barGraphWidth = barTotalWidth - barGraphMargin.left - barGraphMargin.right;
+      const barGraphHeight = barTotalHeight - barGraphMargin.top - barGraphMargin.bottom - 10;
+      let barGraphAnnotations = barGraph.append("g").attr("id", "annotations");
+
+        /* ==============================------------------------------==============================
+         *                                       Bar Chart Code
+         * ==============================------------------------------==============================
+         */
+
+      const requestData = async function () {
+        let disasters = await d3.csv("disasters_processed.csv", d3.autoType);
+
+        // list of all regions we will look at 
+        const regionList = [
+          "Southern Asia", 
+          "South-Eastern Asia", 
+          "Eastern Asia", 
+          "South America", 
+          "Northern America", 
+          "Eastern Africa", 
+          "Central America",
+          "Western Africa",
+          "Southern Europe",
+          "Caribbean",
+          "Western Asia",
+          "Eastern Europe",
+          "Western Europe",
+          "Middle Africa",
+          "Oceania Islands",
+          "Northern Africa",
+          "Australia and New Zealand",
+          "Northern Europe",
+          "Southern Africa",
+          "Central Asia"
+        ]
+
+        console.log(typeof(regionList))
+
+        console.log(barGraphWidth)
+
+        const disasterList = ["Flood", "Storm", "Earthquake", "Epidemic", "Landslide"]
+        
+        let regionDisasterCounts = [];
+        regionList.forEach(region => {
+          regionDisasterCounts.push({
+            Region: region,
+            Flood: 0,
+            Storm: 0,
+            Earthquake: 0,
+            Epidemic: 0,
+            Landslide: 0,
+            Total: 0
+        });
+        } );
+
+        function regionDisasterCount(d, type) {
+          regionDisasterCounts.forEach( regionOfObj => {
+            if (d.region == regionOfObj.Region & d.disaster_type == type) {
+              console.log("matched!")
+              regionOfObj[type] += 1
+              regionOfObj["Total"] += 1
+            }
+          })
+        }
+
+        disasters.forEach( d => {
+          if (disasterList.includes(d.disaster_type))
+          regionDisasterCount( d, "Flood");
+          regionDisasterCount( d, "Storm");
+          regionDisasterCount( d, "Earthquake");
+          regionDisasterCount( d, "Epidemic");
+          regionDisasterCount( d, "Landslide");
+        })
+
+        console.log(regionDisasterCounts, barGraphWidth, regionList);
+
+        // // Set up scales
+        const regionScale = d3.scaleBand().domain(regionList).range([0,barGraphWidth]).padding(0.05)
+        console.log("region test:", regionScale("Central Asia"))
+
+        const percentScale = d3.scaleLinear()
+          .domain([0, 1])
+          .range([0, barGraphHeight]);
+
+        colorPalette = ["#00c2de", "#fa8901", "#808080", "#f43545", "#97572b"]
+        const scaleOrdinal = d3.scaleOrdinal(colorPalette);
+
+        // // Create axes and axis labels
+
+        let bottomAxis = d3.axisBottom(regionScale);
+        barGraphAnnotations.append('g')
+          .attr('class', 'x axis')
+          .attr('transform', `translate(${barGraphMargin.left}, ${barGraphHeight + barGraphMargin.top + 10})`)
+          .call(bottomAxis.tickFormat(d3.format("d")));
+
+        let leftAxis = d3.axisLeft(percentScale);
+        barGraphAnnotations.append('g')
+          .attr('class', 'y axis')
+          .attr('transform', `translate(${barGraphMargin.left - 10}, ${barGraphMargin.top})`)
+          .call(leftAxis.tickFormat(p => {
+            return Math.round((1 - p) * 100) + "%";
+          }));
+
+        barGraphAnnotations.append("text")
+          .attr("class", "x label")
+          .attr("text-anchor", "middle")
+          .attr("x", (barGraphWidth / 2) + barGraphMargin.left)
+          .attr("y", barGraphHeight + barGraphMargin.top + 50)
+          .text("Region");
+
+        barGraphAnnotations.append("text")
+          .attr("class", "y label")
+          .attr("text-anchor", "middle")
+          .attr("y", 5)
+          .attr("x", -barGraphHeight / 2 + barGraphMargin.top)
+          .attr("dy", ".6em")
+          .attr("transform", "rotate(-90)")
+          .text("Percent of Disasters");
+
+        // Create bars (only if disaster has at least 1% in a region)
+
+        let rectWidth = barGraphWidth / 20;
+
+        regionDisasterCounts.forEach((regionObj, i) => {
+          total = regionObj["Total"];
+          region = regionObj["Region"]
+          region.replace(" ", "");
+          let nextFloor = 0;
+          for (let c in regionObj) {
+            if (c != "Total" && c != "Region") {
+              percent = regionObj[c] / total;
+              if (percent >= 0.01) {
+                barGraph.append("rect")
+                  .attr("x", regionScale(region) + barGraphMargin.left)
+                  .attr("y", nextFloor + barGraphMargin.top)
+                  .attr("originalPosition", nextFloor + barGraphMargin.top)
+                  .attr("width", rectWidth)
+                  .attr("height", percentScale(regionObj[c] / total))
+                  .style("fill", scaleOrdinal(c))
+                  .attr("originalFill", scaleOrdinal(c))
+                  .attr("class", `bar ${c} ${region}`);
+                nextFloor += percentScale(regionObj[c] / total);
+              }
+            }
+          }
+        })
+
+        // LEGEND FUNCTIONS //
+        let fixedLegend = d3.select("#legend")
+        for (let i = 0; i < disasterList.length; i++) {
+          let text = fixedLegend.append("text")
+            .style("position", "absolute")
+            .text(disasterList[i])
+            .style("right", 80)
+            .style("top", 190 + i * 34)
+            .style("height", 50)
+            .style("padding-top", "16px")
+            .style("text-align", "right")
+            .style("color", scaleOrdinal(disasterList[i]));
+          let box = fixedLegend.append("rect")
+            .style("background", scaleOrdinal(disasterList[i]))
+            .style("position", "absolute")
+            .style("right", 40)
+            .style("top", 200 + i * 34)
+            .style("width", 20)
+            .style("height", 20)
+          let container = fixedLegend.append("rect")
+            .style("position", "absolute")
+            .style("opacity", 0)
+            .style("right", 40)
+            .style("top", 200 + i * 34)
+            .style("width", 140)
+            .style("height", 50)
+          container.on("mouseover", function () {
+            disappear(disasterList[i])
+            //disappearRegion("SouthernAsia")
+          }).on("mouseout", function () {
+            reappearAll()
+          });
+        }
+        // Graph manipulation functions
+
+        // Hides all consoles except c
+        function disappear(c) {
+          let barMover = d3.selectAll('.bar')
+            .filter(function () {
+              return !this.classList.contains(c)
+            });
+          let op = 0;
+          barMover._groups.forEach(bar => {
+            bar.forEach((r, i) => {
+              d3.select(r).transition().duration(200)
+                .attr("opacity", 0.0);
+            })
+          })
+          barMover = d3.selectAll(`.${c}`);
+          barMover.style("fill", scaleOrdinal(c));
+          let h = 0;
+          barMover._groups.forEach(bar => {
+            bar.forEach((r, i) => {
+              h = r.getAttribute("height");
+              d3.select(r).transition().duration(500)
+                .attr("opacity", 1)
+                .attr("y", barGraphHeight - h + barGraphMargin.top);
+            })
+          })
+        }
+
+        // function disappearRegion(region) {
+        //   let barMover = d3.selectAll('.bar')
+        //     .filter(function () {
+        //       return !this.classList.contains(region)
+        //     });
+        //   let op = 0;
+        //   console.log(barMover._groups)
+        //   barMover._groups.forEach(bar => {
+        //     bar.forEach((r, i) => {
+        //       d3.select(r).transition().duration(200)
+        //         .attr("opacity", 0.3);
+        //     })
+        //   })
+        //   barMover = d3.selectAll(`.${region}`);
+        //   barMover.style("fill", scaleOrdinal(region));
+        //   barMover._groups.forEach(bar => {
+        //     bar.forEach((r, i) => {
+        //       d3.select(r).transition().duration(500)
+        //         .attr("opacity", 1)
+        //     })
+        //   })
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Returns graph to original position
+        function reappearAll() {
+          let barMover = d3.selectAll('.bar');
+          let op = 0;
+          let f = "";
+          barMover._groups.forEach(bar => {
+            bar.forEach((r, i) => {
+              op = r.getAttribute("originalPosition");
+              f = r.getAttribute("originalFill");
+              d3.select(r).transition().duration(200)
+                .attr("y", op)
+                .attr("opacity", 1);
+            })
+          })
+        }
+      }
+      requestData();
+
+    </script>
+</body>
+</html>
