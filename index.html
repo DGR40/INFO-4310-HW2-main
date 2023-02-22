@@ -415,6 +415,9 @@
             .filter(function () {
               return !this.classList.contains(d) && goodRegions.includes(this.classList[2]);
             });
+
+
+         
           let op = 0;
           barMover._groups.forEach(bar => {
             bar.forEach((r, i) => {
@@ -609,6 +612,12 @@
             .filter(function () {
               return !goodRegions.includes(this.classList[2]);
             });
+
+          // handle line graph
+          let lineMover = d3.selectAll('.g-tags').filter(function () {
+            return !goodRegions.includes(this.classList[1]);
+          })
+
           //console.log("List of bars to adjust", barMover);
           let op = 0;
           barMover._groups.forEach(bar => {
@@ -618,10 +627,31 @@
                 .attr("opacity", 0.15);
             })
           })
+
+          lineMover._groups.forEach(line => {
+            //console.log("bar", bar)
+            line.forEach((r, i) => {
+              d3.select(r).transition().duration(200)
+                .attr("opacity", 0);
+            })
+          })
+
           barMover = d3.selectAll('.bar')
             .filter(function () {
               return goodRegions.includes(this.classList[2]);
             });
+
+          lineMover = d3.selectAll('.g-tags').filter(function () {
+            return goodRegions.includes(this.classList[1]);
+          })
+
+          lineMover._groups.forEach(line => {
+            line.forEach((r, i) => {
+              d3.select(r).transition().duration(500)
+                .attr("opacity", 1)
+            })
+          })
+
           barMover._groups.forEach(bar => {
             bar.forEach((r, i) => {
               d3.select(r).transition().duration(500)
@@ -636,6 +666,12 @@
           })
           highlightBars()
         }
+
+        function highlightListOfBars() 
+
+
+
+
 
 
     </script>
