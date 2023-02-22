@@ -498,6 +498,7 @@
         let linegtags = lineGraphArea.selectAll("g.g-tags").data(timeJson.timeseries)
                     .join("g")
                     .attr("class", "g-tags")
+                    .attr("class", d => `g-tags ${d.region.replace(" ", "")}`)
                     .style("stroke", d => colorScale(d['region']));
 
         linegtags.append("path")
