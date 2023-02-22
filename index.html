@@ -49,6 +49,9 @@
       position: fixed;
       left:60%;
       margin-left:10px;
+      height:100%;
+      top:35%;
+      margin-top:auto;
     }
     .panel > input {
       margin-bottom: 5px;
@@ -644,7 +647,7 @@
             //console.log("bar", bar)
             bar.forEach((r, i) => {
               d3.select(r).transition().duration(200)
-                .attr("opacity", 0.2);
+                .attr("opacity", 0.15);
             })
           })
 
