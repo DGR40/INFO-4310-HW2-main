@@ -537,8 +537,6 @@
         lineGraphAnnotations.append("text")
           .attr("class", "x label")
           .attr("text-anchor", "middle")
-          .attr("stroke", "black")
-          .attr("fill", "black")
           .attr("x", (lineGraphWidth / 2) + lineGraphMargin.left)
           .attr("y", lineGraphHeight + lineGraphMargin.top + lineGraphMargin.bottom)
           .text("Decade");
@@ -576,7 +574,7 @@
                                 .attr("cy", d => countScale(d['count']))
                                 .attr("r", 4)
                                 .attr("fill", d => colorScale(d['region']));
-                                
+
         selectAll(true);
 
       }
